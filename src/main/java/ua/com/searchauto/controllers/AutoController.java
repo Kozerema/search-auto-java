@@ -14,13 +14,12 @@ import ua.com.searchauto.queryFilters.AutoSpecifications;
 import ua.com.searchauto.services.AutoService;
 import ua.com.searchauto.views.Views;
 
-import java.io.File;
-import java.io.IOException;
+
 import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/autos")
+@RequestMapping("clients/autos")
 public class AutoController {
 
     private AutoDAO autoDAO;
@@ -91,20 +90,20 @@ public class AutoController {
     }
 
 
-    @PostMapping("/saveWithAvatar")
-    public void saveWithAvatar(@RequestParam String name,
-                               @RequestParam int power,
-                               @RequestParam MultipartFile avatar
-    ) throws IOException {
-
-        Auto auto = new Auto(name, power);
-        String originalFilename = avatar.getOriginalFilename();
-        auto.setAvatar("/photo/" + originalFilename);
-        String path = "D:" + File.separator + "Document" + File.separator + "images" + File.separator + originalFilename;
-        File file = new File(path);
-        avatar.transferTo(file);
-        autoService.save(auto);
-    }
+//    @PostMapping("/saveWithAvatar")
+//    public void saveWithAvatar(@RequestParam String name,
+//                               @RequestParam int power,
+//                               @RequestParam MultipartFile avatar
+//    ) throws IOException {
+//
+//        Auto auto = new Auto(name, power);
+//        String originalFilename = avatar.getOriginalFilename();
+//        auto.setAvatar("/photo/" + originalFilename);
+//        String path = "D:" + File.separator + "Document" + File.separator + "images" + File.separator + originalFilename;
+//        File file = new File(path);
+//        avatar.transferTo(file);
+//        autoService.save(auto);
+//    }
 
 
 

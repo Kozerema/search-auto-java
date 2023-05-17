@@ -9,11 +9,11 @@ import ua.com.searchauto.models.Auto;
 public class AutoDTO {
     private String name;
     private int power;
-    private String avatar;
+//    private String avatar;
 
     public AutoDTO(Auto auto){
         this.name=auto.getName();
         this.power=auto.getPower();
-        this.avatar=auto.getAvatar();
+//        this.avatar=auto.getAvatar();
     }
 }
