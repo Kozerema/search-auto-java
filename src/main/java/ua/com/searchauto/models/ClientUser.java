@@ -33,7 +33,7 @@ public class ClientUser implements UserDetails {
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    private List<ClientRole> clientRoles = Arrays.asList(ClientRole.CLIENT);
+    private List<ClientRole> clientRoles = Arrays.asList(ClientRole.USER);
 
     @Override
     public String getUsername() {

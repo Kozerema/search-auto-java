@@ -19,48 +19,48 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/autos")
+//@RequestMapping("/autos")
 public class AutoController {
 
     private AutoDAO autoDAO;
     private AutoService autoService;
 
 
-    @PostMapping("")
+    @PostMapping("/autos")
     @ResponseStatus(HttpStatus.OK)
     public void save(@RequestBody @Valid Auto auto) {
         autoService.save(auto);
     }
 
-
-    @GetMapping("")
-    @JsonView(value = {Views.Admin.class})
-    public ResponseEntity<List<Auto>> getAutos() {
-
-        return autoService.findAllWithSpecifications(AutoSpecifications.byName("kokos"));
-    }
-
-    @GetMapping("/{id}")
-    public AutoDTO getAuto(@PathVariable("id") int id) {
-        return autoService.getAuto(id);
-    }
-
-
-    //TODO autoService
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<List<Auto>> deleteUsers(@PathVariable("id") int id) {
-        autoDAO.deleteById(id);
-        return new ResponseEntity<>(autoDAO.findAll(), HttpStatus.OK);
-    }
-
-    @PatchMapping("/{id}")
-    public Auto updateUser(@PathVariable("id") int id, @RequestBody @Valid Auto auto) {
-        Auto auto1 = autoDAO.findById(id).get();
-        auto1.setBrand(auto.getBrand());
-        autoDAO.save(auto1);
-        return auto1;
-    }
+//
+//    @GetMapping("")
+//    @JsonView(value = {Views.Admin.class})
+//    public ResponseEntity<List<Auto>> getAutos() {
+//
+//        return autoService.findAllWithSpecifications(AutoSpecifications.byName("kokos"));
+//    }
+//
+//    @GetMapping("/{id}")
+//    public AutoDTO getAuto(@PathVariable("id") int id) {
+//        return autoService.getAuto(id);
+//    }
+//
+//
+//    //TODO autoService
+//
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<List<Auto>> deleteUsers(@PathVariable("id") int id) {
+//        autoDAO.deleteById(id);
+//        return new ResponseEntity<>(autoDAO.findAll(), HttpStatus.OK);
+//    }
+//
+//    @PatchMapping("/{id}")
+//    public Auto updateUser(@PathVariable("id") int id, @RequestBody @Valid Auto auto) {
+//        Auto auto1 = autoDAO.findById(id).get();
+//        auto1.setBrand(auto.getBrand());
+//        autoDAO.save(auto1);
+//        return auto1;
+//    }
 
 
 //    @GetMapping("/name/{nameValue}")

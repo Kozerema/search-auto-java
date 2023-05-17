@@ -29,11 +29,11 @@ public class AutoDTO {
 
     public AutoDTO(Auto auto) {
 //        this.brand = auto.getBrand();
-        this.model = auto.getModel();
-        this.power = auto.getPower();
+//        this.model = auto.getModel();
+//        this.power = auto.getPower();
 //        this.avatar = auto.getAvatar();
 //        this.description = auto.getDescription();
-        this.year = auto.getYear();
+//        this.year = auto.getYear();
         this.city = auto.getCity();
         this.region = auto.getRegion();
         this.price = auto.getPrice();
