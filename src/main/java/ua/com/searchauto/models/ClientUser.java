@@ -1,10 +1,12 @@
 package ua.com.searchauto.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import ua.com.searchauto.models.enums.ClientRole;
 
 
 import java.util.ArrayList;
@@ -18,19 +20,20 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-//@ToString
 public class ClientUser implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     @Column(unique = true)
+//    @Email
     private String email;
     private String password;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
-    private List<Role> roles = Arrays.asList(Role.ADMIN);
+    private List<ClientRole> clientRoles = Arrays.asList(ClientRole.CLIENT);
 
     @Override
     public String getUsername() {
@@ -45,7 +48,7 @@ public class ClientUser implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        this.roles.forEach(role -> authorities.add(new SimpleGrantedAuthority(role.name())));
+        this.clientRoles.forEach(clientRole -> authorities.add(new SimpleGrantedAuthority(clientRole.name())));
         return authorities;
     }
 

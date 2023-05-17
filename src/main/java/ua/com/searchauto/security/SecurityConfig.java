@@ -42,8 +42,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST,"/clients/save","/clients/login").permitAll()
                 .requestMatchers("/clients/**").permitAll()
-                .requestMatchers("/user/**").hasAnyAuthority("USER","MANAGER")
-                .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                .requestMatchers("/user/**").hasAnyAuthority("USER","MANAGER","ADMIN")
+                .requestMatchers("/admin/**","/autos/**","/autos").hasAuthority("ADMIN")
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 

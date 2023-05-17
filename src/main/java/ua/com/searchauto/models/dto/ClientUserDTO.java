@@ -13,4 +13,5 @@ public class ClientUserDTO {
 
     private String username;
     private String password;
+
 }

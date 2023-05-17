@@ -1,13 +1,7 @@
 package ua.com.searchauto.controllers;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +12,6 @@ import ua.com.searchauto.models.ClientUser;
 import ua.com.searchauto.models.dto.ClientUserDTO;
 import ua.com.searchauto.services.ClientUserService;
 
-import java.security.AuthProvider;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -41,6 +34,7 @@ public class ClientsController {
         clientUser.setPassword(passwordEncoder.encode(clientUserDTO.getPassword()));
 
 
+
         clientUserDAO.save(clientUser);
 
     }
@@ -60,6 +54,8 @@ public class ClientsController {
         return clientUserDAO.findAll().stream().map(clientUser -> clientUser.getEmail()).collect(Collectors.toList());
 
     }
+
+
 
     //ADMIN
     @GetMapping("/admin/all")

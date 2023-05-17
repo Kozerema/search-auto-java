@@ -12,16 +12,16 @@ import java.util.Map;
 public interface AutoDAO extends JpaRepository<Auto,Integer>, JpaSpecificationExecutor<Auto> {
 
 
-    @Query("select a from Auto a where a.name=:name ")
-    List<Auto> getAutoByName(@Param("name") String name);
-
-//    List<Auto> findByName(String name);
-
-    List<Auto> findCarByPower(int power);
-
-//    List<Car> findCarByProducer(String producer);
-
-    @Query("select a from Auto a where a.producer=:producer")
-    List<Auto> getCarByProducer(@Param("producer") String producer);
+//    @Query("select a from Auto a where a.brand=:brand ")
+//    List<Auto> getAutoByName(@Param("brand") String brand);
+//
+////    List<Auto> findByName(String name);
+//
+//    List<Auto> findCarByPower(int power);
+//
+////    List<Car> findCarByProducer(String producer);
+//
+//    @Query("select a from Auto a where a.power=:power")
+//    List<Auto> getCarByProducer(@Param("power") int power);
 
 }

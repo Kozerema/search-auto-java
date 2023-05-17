@@ -14,8 +14,7 @@ import ua.com.searchauto.queryFilters.AutoSpecifications;
 import ua.com.searchauto.services.AutoService;
 import ua.com.searchauto.views.Views;
 
-import java.io.File;
-import java.io.IOException;
+
 import java.util.List;
 
 @RestController
@@ -56,55 +55,55 @@ public class AutoController {
     }
 
     @PatchMapping("/{id}")
-    public Auto updateUser(@PathVariable("id") int id, @RequestBody Auto auto) {
+    public Auto updateUser(@PathVariable("id") int id, @RequestBody @Valid Auto auto) {
         Auto auto1 = autoDAO.findById(id).get();
-        auto1.setName(auto.getName());
+        auto1.setBrand(auto.getBrand());
         autoDAO.save(auto1);
         return auto1;
     }
 
 
-    @GetMapping("/name/{nameValue}")
-    @JsonView(value = Views.User.class)
-
-    public ResponseEntity<List<Auto>> autosByName(@PathVariable("nameValue") String nameValue) {
-
-        return new ResponseEntity<List<Auto>>(autoDAO.getAutoByName(nameValue), HttpStatus.OK);
-
-//        return autoDAO.findByName(nameValue);
-
-    }
-
-
-    @GetMapping("/power/{power}")
-    public ResponseEntity<List<Auto>> findCarByPower(@PathVariable int power) {
-
-        return new ResponseEntity<>(autoDAO.findCarByPower(power), HttpStatus.OK);
-    }
-
-    @GetMapping("producer/{producer}")
-    public ResponseEntity<List<Auto>> findCarByProducer(@PathVariable String producer) {
-//        return carDAO.findCarByProducer(producer);
-
-        return new ResponseEntity<>(autoDAO.getCarByProducer(producer), HttpStatus.OK);
-
-    }
+//    @GetMapping("/name/{nameValue}")
+//    @JsonView(value = Views.User.class)
+//
+//    public ResponseEntity<List<Auto>> autosByName(@PathVariable("nameValue") String nameValue) {
+//
+//        return new ResponseEntity<List<Auto>>(autoDAO.getAutoByName(nameValue), HttpStatus.OK);
+//
+////        return autoDAO.findByName(nameValue);
+//
+//    }
 
 
-    @PostMapping("/saveWithAvatar")
-    public void saveWithAvatar(@RequestParam String name,
-                               @RequestParam int power,
-                               @RequestParam MultipartFile avatar
-    ) throws IOException {
+//    @GetMapping("/power/{power}")
+//    public ResponseEntity<List<Auto>> findCarByPower(@PathVariable int power) {
+//
+//        return new ResponseEntity<>(autoDAO.findCarByPower(power), HttpStatus.OK);
+//    }
 
-        Auto auto = new Auto(name, power);
-        String originalFilename = avatar.getOriginalFilename();
-        auto.setAvatar("/photo/" + originalFilename);
-        String path = "D:" + File.separator + "Document" + File.separator + "images" + File.separator + originalFilename;
-        File file = new File(path);
-        avatar.transferTo(file);
-        autoService.save(auto);
-    }
+//    @GetMapping("producer/{producer}")
+//    public ResponseEntity<List<Auto>> findCarByProducer(@PathVariable String brand) {
+////        return carDAO.findCarByProducer(producer);
+//
+//        return new ResponseEntity<>(autoDAO.getCarByProducer(brand), HttpStatus.OK);
+//
+//    }
+
+
+//    @PostMapping("/saveWithAvatar")
+//    public void saveWithAvatar(@RequestParam String name,
+//                               @RequestParam int power,
+//                               @RequestParam MultipartFile avatar
+//    ) throws IOException {
+//
+//        Auto auto = new Auto(name, power);
+//        String originalFilename = avatar.getOriginalFilename();
+//        auto.setAvatar("/photo/" + originalFilename);
+//        String path = "D:" + File.separator + "Document" + File.separator + "images" + File.separator + originalFilename;
+//        File file = new File(path);
+//        avatar.transferTo(file);
+//        autoService.save(auto);
+//    }
 
 
 
