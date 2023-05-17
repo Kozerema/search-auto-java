@@ -1,14 +1,19 @@
 package ua.com.searchauto.services;
 
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import ua.com.searchauto.dao.AutoDAO;
 import ua.com.searchauto.models.Auto;
 import ua.com.searchauto.models.dto.AutoDTO;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -17,18 +22,17 @@ import java.util.List;
 public class AutoService {
     private AutoDAO autoDAO;
 
-    public void save(Auto auto){
+
+    public void save( Auto auto){
         if (auto==null){
             throw new RuntimeException();
         }
         autoDAO.save(auto);
     }
 
-    public ResponseEntity<List<Auto>> findAllWithSpecifications(Specification<Auto> criteria){
+    public List<Auto> getAutos(){
 
-        List<Auto> all = autoDAO.findAll(criteria);
-        return new ResponseEntity<>(all, HttpStatus.OK);
-
+         return autoDAO.findAll();
     }
 
     public AutoDTO getAuto(int id){
@@ -36,9 +40,59 @@ public class AutoService {
         AutoDTO autoDTO=null;
         if (id>0){
             autoDTO= new AutoDTO(autoDAO.findById(id).get());
+
         }
         return autoDTO;
     }
+
+    public void saveWithAvatar( String model,
+                                int power,
+                                int year,
+                                String description,
+                                String city,
+                                String region,
+                                int price,
+                                MultipartFile avatar) throws IOException {
+        Auto auto = new Auto(model, power, year, description, city, region, price);
+        String originalFilename = avatar.getOriginalFilename();
+        auto.setAvatar("/photo/" + originalFilename);
+        String path = "D:" + File.separator + "Document" + File.separator + "images" + File.separator + originalFilename;
+        File file = new File(path);
+        avatar.transferTo(file);
+        save(auto);
+    }
+
+    public Auto updateAuto(int id, Auto auto){
+        Auto auto1 = autoDAO.findById(id).get();
+        auto1.setModel(auto.getModel());
+        autoDAO.save(auto1);
+        return auto1;
+    }
+
+    public ResponseEntity<List<Auto>> deleteAuto(int id){
+        autoDAO.deleteById(id);
+        return new ResponseEntity<>(autoDAO.findAll(), HttpStatus.OK);
+    }
+
+    ///////////////////////////////
+
+    public ResponseEntity<List<Auto>> findAllWithSpecifications(Specification<Auto> criteria){
+
+        List<Auto> all = autoDAO.findAll(criteria);
+        return new ResponseEntity<>(all, HttpStatus.OK);
+
+    }
+///////////////
+//public static boolean isValidEmailAddress(String email) {
+//    boolean result = true;
+//    try {
+//        InternetAddress emailAddr = new InternetAddress(email);
+//        emailAddr.validate();
+//    } catch (AddressException ex) {
+//        result = false;
+//    }
+//    return result;
+//}
 
 
 }

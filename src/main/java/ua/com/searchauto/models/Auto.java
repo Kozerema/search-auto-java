@@ -1,13 +1,14 @@
 package ua.com.searchauto.models;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
-import ua.com.searchauto.views.Views;
+import ua.com.searchauto.models.enums.Brand;
+import ua.com.searchauto.models.enums.Currency;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,35 +18,92 @@ import ua.com.searchauto.views.Views;
 @Entity
 public class Auto {
 
+    //  TODO @Pattern(regexp = "") //регулярка, цен зура? create validator
+    //TODO витягнути помилки в валідації
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonView(value = Views.Admin.class)
     private int id;
 
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private List<Brand> brand = Arrays.asList(Brand.KIA);
 
+    /////make змінну або метод
+
+//    @Pattern.List(value = {@Pattern(regexp = "^[a@][s\\$][s\\$]$"),
+//            @Pattern(regexp = "[a@][s\\$][s\\$]h[o0][l1][e3][s\\$]?"),
+//            @Pattern(regexp = "b[a@][s\\$][t\\+][a@]rd "),
+//            @Pattern(regexp = "b[e3][a@][s\\$][t\\+][i1][a@]?[l1]([i1][t\\+]y)?"),
+//            @Pattern(regexp = "b[e3][a@][s\\$][t\\+][i1][l1][i1][t\\+]y"),
+//            @Pattern(regexp = "b[e3][s\\$][t\\+][i1][a@][l1]([i1][t\\+]y)?"),
+//            @Pattern(regexp = "b[i1][t\\+]ch[s\\$]?"),
+//            @Pattern(regexp = "^(c|k|ck|q)[o0](c|k|ck|q)[s\\$]?$"),
+//            @Pattern(regexp = "^cum[s\\$]?$"),
+//            @Pattern(regexp = "d[i1]ck"),
+//            @Pattern(regexp = "(ph|f)[a@]g[s\\$]?"),
+//            @Pattern(regexp = "(ph|f)u(c|k|ck|q)"),
+//            @Pattern(regexp = "h[o0]m?m[o0]"),
+//            @Pattern(regexp = "g[a@]y"),
+//            @Pattern(regexp = "j[a@](c|k|ck|q)\\-?[o0](ph|f)(ph|f)?"),
+//            @Pattern(regexp = "p[o0]rn"),
+//            @Pattern(regexp = "[s\\$][e3]x"),
+//            @Pattern(regexp = "[s\\$]h[i1][t\\+][s\\$]?"),
+//            @Pattern(regexp = "[o0]rg[a@][s\\$]m[s\\$]?")
+//
+//    })
+    private String model;
+
+
+
+    @Min(value = 0, message = "can`t be lower than 0")
+    private int power;
+
+    @Min(value = 1970, message = "wrong")
+    @Max(value = 2023, message = "wrong")
+    private int year;
+
+
+    private String description;
+
+
+    @Size(min = 2, message = "too short")
+    @Size(max = 200, message = "too long")
+    private String city;
     @NotBlank
     @Size(min = 2, message = "too short")
-    @JsonView(value = {Views.Client.class, Views.User.class, Views.Admin.class})
-    //  @Pattern(regexp = "") //регулярка, цен зура?
-    private String name;
+    @Size(max = 200, message = "too long")
+    private String region;
 
-    @JsonView(value = {Views.Client.class, Views.User.class})
-    private String producer;
+    @Positive
+    private int price;
+
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private List<Currency> currency = Arrays.asList(Currency.UAN);
 
 
-    @Max(value = 1100, message = "too much")
-    @Min(value = 0, message = "can`t be lower than 0")
-
-
-    @JsonView(value = {Views.User.class, Views.Admin.class})
-    private int power;
 
     private String avatar;
 
-    public Auto(String name, int power) {
-        this.name = name;
-        this.producer = producer;
+
+    private static int counterOfViews = 1;
+
+    public Auto(String model, int power, int year, String description, String city, String region, int price) {
+        this.model = model;
         this.power = power;
+        this.year = year;
+        this.description = description;
+        this.city = city;
+        this.region = region;
+        this.price = price;
+
+//
+    }
+    public int getCounterOfViews(){
+        LocalDateTime myObj = LocalDateTime.now();
+        return counterOfViews++;
     }
 
 }
