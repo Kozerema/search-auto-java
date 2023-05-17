@@ -42,7 +42,7 @@ public class Auto {
 
     private String avatar;
 
-    public Auto(String name, int power) {
+    public Auto(String name, String producer, int power) {
         this.name = name;
         this.producer = producer;
         this.power = power;
