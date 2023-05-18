@@ -32,7 +32,7 @@ public class Auto {
 
     /////make змінну або метод
 
-//    @Pattern.List(value = {@Pattern(regexp = "^[a@][s\\$][s\\$]$"),
+    //    @Pattern.List(value = {@Pattern(regexp = "^[a@][s\\$][s\\$]$"),
 //            @Pattern(regexp = "[a@][s\\$][s\\$]h[o0][l1][e3][s\\$]?"),
 //            @Pattern(regexp = "b[a@][s\\$][t\\+][a@]rd "),
 //            @Pattern(regexp = "b[e3][a@][s\\$][t\\+][i1][a@]?[l1]([i1][t\\+]y)?"),
@@ -56,7 +56,6 @@ public class Auto {
     private String model;
 
 
-
     @Min(value = 0, message = "can`t be lower than 0")
     private int power;
 
@@ -77,20 +76,42 @@ public class Auto {
     private String region;
 
     @Positive
-    private int price;
+    private float price;
 
-    @ElementCollection(fetch = FetchType.EAGER)
-    @Enumerated(EnumType.STRING)
-    private List<Currency> currency = Arrays.asList(Currency.UAN);
+//    @ElementCollection(fetch = FetchType.EAGER)
+//    @Enumerated(EnumType.STRING)
+//    private List<Currency> currency = Arrays.asList(Currency.UAN);
 
+//    private Currency currency;
 
+//    private double usd=36.94;
+//    private double eur=39.77;
+//
+//    public void calculator(){
+//        switch (currency){
+//            case UAN:
+//                double mouthUSD1=price/usd;
+//                double mouthEUR1=price/eur;
+//             break;
+//            case USD:
+//                double mouthUAN1=price*usd;
+//                double mouthEUR=price/eur;
+//                break;
+//            case EUR:
+//                double mouthUSD=price/usd;
+//                double mouthUAN=price*eur;
+//                break;
+//        }
+//
+//    }
 
     private String avatar;
 
+//  private boolean status;
 
     private static int counterOfViews = 1;
 
-    public Auto(String model, int power, int year, String description, String city, String region, int price) {
+    public Auto(String model, int power, int year, String description, String city, String region, float price) {
         this.model = model;
         this.power = power;
         this.year = year;
@@ -101,7 +122,10 @@ public class Auto {
 
 //
     }
-    public int getCounterOfViews(){
+
+
+
+    public int getCounterOfViews() {
         LocalDateTime myObj = LocalDateTime.now();
         return counterOfViews++;
     }

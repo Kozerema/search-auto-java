@@ -17,7 +17,10 @@ import ua.com.searchauto.views.Views;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @RestController
 @AllArgsConstructor
@@ -31,7 +34,7 @@ public class AutoController {
 
     @PostMapping("")
     @ResponseStatus(HttpStatus.OK)
-    public void save(@RequestBody Auto auto) {
+    public void saveAuto(@RequestBody Auto auto ) {
         autoService.save(auto);
     }
 
