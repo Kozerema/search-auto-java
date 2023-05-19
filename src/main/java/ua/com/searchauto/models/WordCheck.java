@@ -1,23 +1,33 @@
 package ua.com.searchauto.models;
 
+import ua.com.searchauto.services.AutoService;
+
+import java.util.ArrayList;
+
 public class WordCheck {
-    static boolean checkWord(String input, String words) {
-        if(words.contains(input)) {
-            return true;
-        }
-        else {
-            return false;
-        }
+    AutoService autoService;
 
+    public int counter(){
+        int count=0;
+        count++;
+        return count;
     }
 
-    public static void main(String[] args) {
+        public void check(Auto auto){
+        ArrayList<String> words = new ArrayList<>();
+        words.add(auto.getModel());
+        words.add(auto.getDescription());
+        words.add(auto.getCity());
+        words.add(auto.getRegion());
 
-        String words = "admin,administrator,babo,sir,melon";
+        boolean isContains = words.contains("suka");
+        if(isContains==false){
+            autoService.save(auto);
 
-//        System.out.print(WordCheck.checkWord("babo",words));
-
-
+    }else if(isContains==true){
+            new RuntimeException();
+        }
     }
+
 
 }

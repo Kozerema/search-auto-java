@@ -1,12 +1,13 @@
 package ua.com.searchauto.models;
 
+import com.fasterxml.jackson.annotation.JsonView;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import ua.com.searchauto.models.enums.Brand;
-import ua.com.searchauto.models.enums.Currency;
+import ua.com.searchauto.views.Views;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,43 +23,25 @@ public class Auto {
     //TODO витягнути помилки в валідації
 
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @JsonView(value = Views.Client.class)
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private List<Brand> brand = Arrays.asList(Brand.KIA);
 
-    /////make змінну або метод
-
-    //    @Pattern.List(value = {@Pattern(regexp = "^[a@][s\\$][s\\$]$"),
-//            @Pattern(regexp = "[a@][s\\$][s\\$]h[o0][l1][e3][s\\$]?"),
-//            @Pattern(regexp = "b[a@][s\\$][t\\+][a@]rd "),
-//            @Pattern(regexp = "b[e3][a@][s\\$][t\\+][i1][a@]?[l1]([i1][t\\+]y)?"),
-//            @Pattern(regexp = "b[e3][a@][s\\$][t\\+][i1][l1][i1][t\\+]y"),
-//            @Pattern(regexp = "b[e3][s\\$][t\\+][i1][a@][l1]([i1][t\\+]y)?"),
-//            @Pattern(regexp = "b[i1][t\\+]ch[s\\$]?"),
-//            @Pattern(regexp = "^(c|k|ck|q)[o0](c|k|ck|q)[s\\$]?$"),
-//            @Pattern(regexp = "^cum[s\\$]?$"),
-//            @Pattern(regexp = "d[i1]ck"),
-//            @Pattern(regexp = "(ph|f)[a@]g[s\\$]?"),
-//            @Pattern(regexp = "(ph|f)u(c|k|ck|q)"),
-//            @Pattern(regexp = "h[o0]m?m[o0]"),
-//            @Pattern(regexp = "g[a@]y"),
-//            @Pattern(regexp = "j[a@](c|k|ck|q)\\-?[o0](ph|f)(ph|f)?"),
-//            @Pattern(regexp = "p[o0]rn"),
-//            @Pattern(regexp = "[s\\$][e3]x"),
-//            @Pattern(regexp = "[s\\$]h[i1][t\\+][s\\$]?"),
-//            @Pattern(regexp = "[o0]rg[a@][s\\$]m[s\\$]?")
-//
-//    })
+    @JsonView(value = Views.Client.class)
     private String model;
 
 
+    @JsonView(value = Views.Client.class)
     @Min(value = 0, message = "can`t be lower than 0")
     private int power;
 
+    @JsonView(value = Views.Client.class)
     @Min(value = 1970, message = "wrong")
     @Max(value = 2023, message = "wrong")
     private int year;
@@ -67,14 +50,18 @@ public class Auto {
     private String description;
 
 
+    @JsonView(value = Views.Client.class)
     @Size(min = 2, message = "too short")
     @Size(max = 200, message = "too long")
     private String city;
+
+    @JsonView(value = Views.Client.class)
     @NotBlank
     @Size(min = 2, message = "too short")
     @Size(max = 200, message = "too long")
     private String region;
 
+    @JsonView(value = Views.Client.class)
     @Positive
     private float price;
 
@@ -105,13 +92,17 @@ public class Auto {
 //
 //    }
 
+
+    @JsonView(value = Views.Client.class)
     private String avatar;
 
-//  private boolean status;
 
+//  private boolean status;
+//    @JsonView(value = Views.Premium.class)
     private static int counterOfViews = 1;
 
-    public Auto(String model, int power, int year, String description, String city, String region, float price) {
+
+    public Auto(String model, int power, int year, String description, String city, String region, float price ) {
         this.model = model;
         this.power = power;
         this.year = year;
@@ -119,14 +110,15 @@ public class Auto {
         this.city = city;
         this.region = region;
         this.price = price;
-
-//
     }
 
 
+    public LocalDate date(){
+        LocalDate date = LocalDate.now();
+        return date;
+    }
 
     public int getCounterOfViews() {
-        LocalDateTime myObj = LocalDateTime.now();
         return counterOfViews++;
     }
 

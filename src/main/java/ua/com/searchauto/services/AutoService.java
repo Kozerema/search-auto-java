@@ -9,10 +9,10 @@ import org.springframework.web.multipart.MultipartFile;
 import ua.com.searchauto.dao.AutoDAO;
 import ua.com.searchauto.models.Auto;
 import ua.com.searchauto.models.dto.AutoDTO;
+import ua.com.searchauto.queryFilters.AutoSpecifications;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -25,46 +25,42 @@ public class AutoService {
 
 
 
-    public int counter(){
-        int count=0;
-        count++;
-        return count;
-    }
 
 
-    public void save( Auto auto){
-        if (auto==null){
+
+//    public void save( Auto auto){
+//        if (auto==null){
+//            throw new RuntimeException();
+//        }
+//        ArrayList<String> words = new ArrayList<>();
+//        words.add(auto.getModel());
+//        words.add(auto.getDescription());
+//        words.add(auto.getCity());
+//        words.add(auto.getRegion());
+//
+//        boolean isContains = words.contains("suka");
+//        if(isContains==false){
+//            System.out.println("suka");
+//
+//                    autoDAO.save(auto);
+//
+//    }else if(isContains==true){
+//            throw new RuntimeException();
+//        }
+//    }
+
+    public void save( Auto auto) {
+        if (auto == null) {
             throw new RuntimeException();
         }
-        ArrayList<String> words = new ArrayList<>();
-        words.add(auto.getModel());
-        words.add(auto.getDescription());
-        words.add(auto.getCity());
-        words.add(auto.getRegion());
-
-        boolean isContains = words.contains("suka");
-//        boolean isContains = words.contains("suka");
-//        boolean isContains = words.contains("suka");
-//        boolean isContains = words.contains("suka");
-//        boolean isContains = words.contains("suka");
-//        boolean isContains = words.contains("suka");
-        if(isContains==false){
-            System.out.println("suka");
-
-                    autoDAO.save(auto);
-
-    }else if(isContains==true){
-            throw new RuntimeException();
-        }
+        autoDAO.save(auto);
     }
-
-
-
 
     public List<Auto> getAutos() {
 
         return autoDAO.findAll();
     }
+
 
     public AutoDTO getAuto(int id) {
 
@@ -132,6 +128,15 @@ public class AutoService {
 //    }
 //    return result;
 //}
+
+
+    public ResponseEntity<List<Auto>> findAllWithSpecifications() {
+
+        List<Auto> all = autoDAO.findAll(AutoSpecifications.byViews());
+
+        return new ResponseEntity<>(all, HttpStatus.OK);
+
+    }
 
 
 }

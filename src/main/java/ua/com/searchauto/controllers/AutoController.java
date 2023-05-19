@@ -4,23 +4,17 @@ import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ua.com.searchauto.dao.AutoDAO;
 import ua.com.searchauto.models.Auto;
 import ua.com.searchauto.models.dto.AutoDTO;
-import ua.com.searchauto.queryFilters.AutoSpecifications;
 import ua.com.searchauto.services.AutoService;
 import ua.com.searchauto.views.Views;
 
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
+import java.io.IOException;
+import java.util.List;
 
 @RestController
 @AllArgsConstructor
@@ -28,35 +22,53 @@ import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 public class AutoController {
 
-    private AutoDAO autoDAO;
     private AutoService autoService;
 
 
-    @PostMapping("")
+    @PostMapping("/user")
     @ResponseStatus(HttpStatus.OK)
-    public void saveAuto(@RequestBody Auto auto ) {
+    public void saveAuto(@RequestBody Auto auto) {
+
+//        autoService.check(auto);
         autoService.save(auto);
     }
 
 
-    @GetMapping("")
+    @GetMapping("/user")
+    public ResponseEntity<List<Auto>> getAllAutos() {
+        return new ResponseEntity<List<Auto>>(autoService.getAutos(), HttpStatus.OK);
+    }
 
-    public ResponseEntity<List<Auto>> getAutos() {
-
+    @JsonView(value = Views.Client.class)
+    @GetMapping("/client")
+    public ResponseEntity<List<Auto>> getAllAutosClient() {
         return new ResponseEntity<List<Auto>>(autoService.getAutos(), HttpStatus.OK);
     }
 
 
+    @JsonView(value = Views.Basic.class)
+    @GetMapping("/users/basic/{id}")
+    public AutoDTO getOneAutoBasic(@PathVariable("id") int id) {
+        return autoService.getAuto(id);
+    }
 
-    @GetMapping("/{id}")
-    public AutoDTO getAuto(@PathVariable("id") int id) {
+    @JsonView(value = Views.Premium.class)
+    @GetMapping("/users/premium/{id}")
+    public AutoDTO getOneAutoPremium(@PathVariable("id") int id) {
+        return autoService.getAuto(id);
+    }
+
+    @JsonView(value = Views.Client.class)
+    @GetMapping("/clients/{id}")
+    public AutoDTO getOneAutoClient(@PathVariable("id") int id) {
         return autoService.getAuto(id);
     }
 
 
+
     @PatchMapping("/{id}")
     public Auto updateAuto(@PathVariable("id") int id, @RequestBody Auto auto) {
-        return autoService.updateAuto(id,auto);
+        return autoService.updateAuto(id, auto);
     }
 
     @DeleteMapping("/{id}")
@@ -65,40 +77,24 @@ public class AutoController {
     }
 
 
-//    @GetMapping("")
+    @JsonView(value = Views.Premium.class)
+    @GetMapping("/users/statistics")
+
+    public ResponseEntity<List<Auto>> getAutosByViews() {
+
 //
-//    public ResponseEntity<List<Auto>> getAutos() {
-//
-//        return autoService.findAllWithSpecifications(AutoSpecifications.byName("kokos"));
-//    }
-//    @GetMapping("/name/{nameValue}")
-//    @JsonView(value = Views.User.class)
-//
-//    public ResponseEntity<List<Auto>> autosByName(@PathVariable("nameValue") String nameValue) {
-//
-//        return new ResponseEntity<List<Auto>>(autoDAO.getAutoByName(nameValue), HttpStatus.OK);
-//
-////        return autoDAO.findByName(nameValue);
-//
-//    }
+//        List<Auto> getAll=autoDAO.findAll(AutoSpecifications.byViews());
+
+//        return (ResponseEntity<List<Auto>>) getAll;
+//        return autoService.findAllWithSpecifications();
+        return null;
+    }
 
 
-//    @GetMapping("/power/{power}")
-//    public ResponseEntity<List<Auto>> findCarByPower(@PathVariable int power) {
-//
-//        return new ResponseEntity<>(autoDAO.findCarByPower(power), HttpStatus.OK);
-//    }
-
-//    @GetMapping("producer/{producer}")
-//    public ResponseEntity<List<Auto>> findCarByProducer(@PathVariable String producer) {
-////        return carDAO.findCarByProducer(producer);
-//
-//        return new ResponseEntity<>(autoDAO.getCarByProducer(producer), HttpStatus.OK);
-//
-//    }
 
 
-    @PostMapping("/saveWithAvatar")
+
+    @PostMapping("/users/saveWithAvatar")
     public void saveWithAvatar(@RequestParam String model,
                                @RequestParam int power,
                                @RequestParam int year,
@@ -107,7 +103,8 @@ public class AutoController {
                                @RequestParam String region,
                                @RequestParam int price,
                                @RequestParam MultipartFile avatar
-    ) throws IOException {autoService.saveWithAvatar(model,
+    ) throws IOException {
+        autoService.saveWithAvatar(model,
                 power,
                 year,
                 description,
