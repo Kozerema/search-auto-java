@@ -3,10 +3,6 @@ package ua.com.searchauto.models;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
-import ua.com.searchauto.models.enums.Brand;
-
-import java.util.Arrays;
-import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor

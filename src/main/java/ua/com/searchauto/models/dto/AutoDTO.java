@@ -13,14 +13,16 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class AutoDTO {
-    @JsonView(value = {Views.Premium.class, Views.Basic.class})
+    @JsonView(value = {Views.Premium.class, Views.Basic.class, Views.Mechanic.class})
     private String model;
-    @JsonView(value = {Views.Premium.class, Views.Basic.class})
+    @JsonView(value = {Views.Premium.class, Views.Basic.class, Views.Mechanic.class})
     private int power;
     @JsonView(value = {Views.Premium.class, Views.Basic.class})
     private String avatar;
 
+    @JsonView(value =  Views.Mechanic.class)
     private String brand;
+    @JsonView(value =  Views.Mechanic.class)
     private int year;
 
     @JsonView(value = Views.Premium.class)

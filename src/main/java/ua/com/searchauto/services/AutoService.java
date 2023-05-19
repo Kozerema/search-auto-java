@@ -21,33 +21,7 @@ import java.util.List;
 public class AutoService {
     private AutoDAO autoDAO;
 
-
-
-
-
-
-
-
-//    public void save( Auto auto){
-//        if (auto==null){
-//            throw new RuntimeException();
-//        }
-//        ArrayList<String> words = new ArrayList<>();
-//        words.add(auto.getModel());
-//        words.add(auto.getDescription());
-//        words.add(auto.getCity());
-//        words.add(auto.getRegion());
-//
-//        boolean isContains = words.contains("suka");
-//        if(isContains==false){
-//            System.out.println("suka");
-//
-//                    autoDAO.save(auto);
-//
-//    }else if(isContains==true){
-//            throw new RuntimeException();
-//        }
-//    }
+//todo mailsender
 
     public void save( Auto auto) {
         if (auto == null) {

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 import ua.com.searchauto.models.enums.Brand;
+import ua.com.searchauto.models.enums.Currency;
 import ua.com.searchauto.views.Views;
 
 import java.time.LocalDate;
@@ -18,11 +19,6 @@ import java.util.List;
 @ToString
 @Entity
 public class Auto {
-
-    //  TODO @Pattern(regexp = "") //регулярка, цен зура? create validator
-    //TODO витягнути помилки в валідації
-
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,40 +61,14 @@ public class Auto {
     @Positive
     private float price;
 
-//    @ElementCollection(fetch = FetchType.EAGER)
-//    @Enumerated(EnumType.STRING)
-//    private List<Currency> currency = Arrays.asList(Currency.UAN);
-
-//    private Currency currency;
-
-//    private double usd=36.94;
-//    private double eur=39.77;
-//
-//    public void calculator(){
-//        switch (currency){
-//            case UAN:
-//                double mouthUSD1=price/usd;
-//                double mouthEUR1=price/eur;
-//             break;
-//            case USD:
-//                double mouthUAN1=price*usd;
-//                double mouthEUR=price/eur;
-//                break;
-//            case EUR:
-//                double mouthUSD=price/usd;
-//                double mouthUAN=price*eur;
-//                break;
-//        }
-//
-//    }
+    @ElementCollection(fetch = FetchType.EAGER)
+    @Enumerated(EnumType.STRING)
+    private List<Currency> currency = Arrays.asList(Currency.UAN);
 
 
     @JsonView(value = Views.Client.class)
     private String avatar;
 
-
-//  private boolean status;
-//    @JsonView(value = Views.Premium.class)
     private static int counterOfViews = 1;
 
 

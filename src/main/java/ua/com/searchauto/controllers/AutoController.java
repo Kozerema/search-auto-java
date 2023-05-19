@@ -25,22 +25,21 @@ public class AutoController {
     private AutoService autoService;
 
 
-    @PostMapping("/user")
+    @PostMapping("/users")
     @ResponseStatus(HttpStatus.OK)
     public void saveAuto(@RequestBody Auto auto) {
 
-//        autoService.check(auto);
         autoService.save(auto);
     }
 
 
-    @GetMapping("/user")
+    @GetMapping("/users")
     public ResponseEntity<List<Auto>> getAllAutos() {
         return new ResponseEntity<List<Auto>>(autoService.getAutos(), HttpStatus.OK);
     }
 
     @JsonView(value = Views.Client.class)
-    @GetMapping("/client")
+    @GetMapping("/clients")
     public ResponseEntity<List<Auto>> getAllAutosClient() {
         return new ResponseEntity<List<Auto>>(autoService.getAutos(), HttpStatus.OK);
     }
@@ -63,15 +62,20 @@ public class AutoController {
     public AutoDTO getOneAutoClient(@PathVariable("id") int id) {
         return autoService.getAuto(id);
     }
+    @JsonView(value = Views.Mechanic.class)
+    @GetMapping("/mechanics/{id}")
+    public AutoDTO getOneAutoMechanic(@PathVariable("id") int id) {
+        return autoService.getAuto(id);
+    }
 
 
 
-    @PatchMapping("/{id}")
+    @PatchMapping("/users/{id}")
     public Auto updateAuto(@PathVariable("id") int id, @RequestBody Auto auto) {
         return autoService.updateAuto(id, auto);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/users/{id}")
     public ResponseEntity<List<Auto>> deleteAuto(@PathVariable("id") int id) {
         return autoService.deleteAuto(id);
     }

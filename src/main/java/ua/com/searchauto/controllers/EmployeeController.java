@@ -14,31 +14,31 @@ import java.util.List;
 public class EmployeeController {
     EmployeeService employeeService;
 
-    @PostMapping("/admin/employee")
+    @PostMapping("/admins/employees")
     @ResponseStatus(HttpStatus.OK)
     public void saveAuto(@RequestBody Employee employee) {
         employeeService.saveEmployee(employee);
     }
 
-    @GetMapping("/admin/findEmployees")
+    @GetMapping("/admins/findEmployees")
     public ResponseEntity<List<Employee>> getEmployees() {
 
         return new ResponseEntity<List<Employee>>(employeeService.getAllEmployee(), HttpStatus.OK);
     }
 
 
-    @GetMapping("/admin/findOneEmployee/{id}")
+    @GetMapping("/admins/findOneEmployees/{id}")
     public Employee getOneEmployee(@PathVariable("id") int id) {
         return employeeService.getOneEmployee(id);
     }
 
 
-    @PatchMapping("/admin/employee/{id}")
+    @PatchMapping("/admins/employees/{id}")
     public Employee updateEmployee(@PathVariable("id") int id, @RequestBody Employee employee) {
         return employeeService.updateEmployee(id, employee);
     }
 
-    @DeleteMapping("/admin/employee/{id}")
+    @DeleteMapping("/admins/employees/{id}")
     public void deleteEmployee(@PathVariable("id") int id) {
          employeeService.deleteEmployee(id);
     }
