@@ -20,6 +20,7 @@ import java.util.List;
 @AllArgsConstructor
 public class AutoService {
     private AutoDAO autoDAO;
+    private MailService mailService;
 
 //todo mailsender
 
@@ -75,6 +76,7 @@ public class AutoService {
         auto1.setPrice(auto.getPrice());
         auto1.setAvatar(auto.getAvatar());
         autoDAO.save(auto1);
+        mailService.sendEmail(auto1);
         return auto1;
     }
 
