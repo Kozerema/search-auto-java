@@ -20,7 +20,7 @@ public class Convertassion {
 //    // convert 10 euro to us dollar
 //    MonetaryAmount inDollar = tenEuro.with(dollarConversion); // "USD 12.537" (at the time writing)
 
-
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 //    MonetaryAmount oneDollar = Monetary.getDefaultAmountFactory().setCurrency("USD")
 //            .setNumber(1).create();
@@ -32,27 +32,4 @@ public class Convertassion {
 //    assertEquals("USD 1", oneDollar.toString());
 //    assertNotNull(convertedAmountUSDtoEUR);
 
-
-    //    private Currency currency;
-
-//    private double usd=36.94;
-//    private double eur=39.77;
-//
-//    public void calculator(){
-//        switch (currency){
-//            case UAN:
-//                double mouthUSD1=price/usd;
-//                double mouthEUR1=price/eur;
-//             break;
-//            case USD:
-//                double mouthUAN1=price*usd;
-//                double mouthEUR=price/eur;
-//                break;
-//            case EUR:
-//                double mouthUSD=price/usd;
-//                double mouthUAN=price*eur;
-//                break;
-//        }
-//
-//    }
 }

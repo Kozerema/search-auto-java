@@ -6,13 +6,6 @@ import java.util.ArrayList;
 
 public class WordCheck {
     AutoService autoService;
-
-    public int counter(){
-        int count=0;
-        count++;
-        return count;
-    }
-
         public void check(Auto auto){
         ArrayList<String> words = new ArrayList<>();
         words.add(auto.getModel());

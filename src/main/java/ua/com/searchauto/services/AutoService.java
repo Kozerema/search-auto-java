@@ -22,7 +22,6 @@ public class AutoService {
     private AutoDAO autoDAO;
     private MailService mailService;
 
-//todo mailsender
 
     public void save( Auto auto) {
         if (auto == null) {
